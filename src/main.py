@@ -1,6 +1,7 @@
 from DataGenerator import generateSamples
 from RBFNN import RBFNN
 from KMeans import kmeans
+from Plot3d import plot_3d
 
 import numpy as np
 
@@ -42,6 +43,7 @@ def main():
     mse = np.mean((np.array(Y) - pred) ** 2)
 
     print("\nMSE:", mse)
+    plot_3d(rbf)
 
 
 if __name__ == "__main__":
