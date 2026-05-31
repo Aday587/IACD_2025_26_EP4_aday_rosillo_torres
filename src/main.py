@@ -1,12 +1,48 @@
 from DataGenerator import generateSamples
+from RBFNN import RBFNN
+from KMeans import kmeans
 
-data = generateSamples(10)
-
-print(data)
+import numpy as np
 
 
-from Adaline import Adaline
+def main():
 
-adaline = Adaline(0.01)
+    data = generateSamples(500)
 
-print("Adaline creado correctamente")
+    X = data[['x', 'y']]
+    Y = data['label']
+
+    print("Datos generados correctamente")
+    print(data.head())
+
+    rbf = RBFNN()
+
+    print("\nEntrenando RBFNN...")
+
+
+    rbf.fit(
+        X=X,
+        Y=Y,
+        k=10,              # neuronas ocultas
+        epochs=100,
+        kmeans=kmeans
+    )
+
+    print("Entrenamiento finalizado")
+
+
+    pred = rbf.predict(X)
+
+    print("\nPredicciones (primeras 10):")
+    print(pred[:10])
+
+    print("\nValores reales (primeros 10):")
+    print(np.array(Y)[:10])
+
+    mse = np.mean((np.array(Y) - pred) ** 2)
+
+    print("\nMSE:", mse)
+
+
+if __name__ == "__main__":
+    main()
