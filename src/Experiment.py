@@ -17,7 +17,7 @@ def run_experiment():
 
     for k in ks:
 
-        model = RBFNN(2, k, 1, 0.01)
+        model = RBFNN()
 
         model.fit(X, Y, 100, kmeans)
 
