@@ -10,35 +10,31 @@ def run_experiment():
     data = generateSamples(500)
 
     X = data[['x', 'y']]
-    Y = data['label']
+    Y = np.sqrt(data['x']**2 + data['y']**2)
 
     ks = [2, 5, 10, 15, 20]
     mses = []
 
     for k in ks:
 
-        model = RBFNN()
+        model = RBFNN(2, k, 1, 0.01)
 
-        model.fit(
-            X=X,
-            Y=Y,
-            k=k,
-            epochs=100,
-            kmeans=kmeans
-        )
+        model.fit(X, Y, 100, kmeans)
 
         pred = model.predict(X)
 
-        mse = np.mean((np.array(Y) - pred) ** 2)
+        mse = np.mean((Y - pred.flatten()) ** 2)
 
         mses.append(mse)
 
         print(k, mse)
 
-    plt.plot(ks, mses)
-    plt.xlabel("Neurons (K)")
+    plt.plot(ks, mses, marker='o')
+    plt.xlabel("Neuronas ocultas (K)")
     plt.ylabel("MSE")
-    plt.title("RBFNN: K vs MSE")
+    plt.title("RBFNN: Neuronas vs Error")
+    plt.grid(True)
+    plt.savefig("../Results/MSE_vs_Neuronas.png")
     plt.show()
 
 
