@@ -23,7 +23,10 @@ def run_experiment():
 
         pred = model.predict(X)
 
-        mse = np.mean((Y - pred.flatten()) ** 2)
+        pred = np.array(pred).flatten()
+        Y_np = np.array(Y).flatten()
+
+        mse = np.mean((Y_np - pred) ** 2)
 
         mses.append(mse)
 
@@ -34,6 +37,7 @@ def run_experiment():
     plt.ylabel("MSE")
     plt.title("RBFNN: Neuronas vs Error")
     plt.grid(True)
+
     plt.savefig("../Results/MSE_vs_Neuronas.png")
     plt.show()
 
