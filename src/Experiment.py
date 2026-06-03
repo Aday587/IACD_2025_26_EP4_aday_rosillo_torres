@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import os
 from DataGenerator import generateSamples
 from RBFNN import RBFNN
 from KMeans import kmeans
@@ -19,7 +20,7 @@ def run_experiment():
 
         model = RBFNN()
 
-        model.fit(X, Y, 100, kmeans)
+        model.fit(X, Y, 100, k, kmeans)
 
         pred = model.predict(X)
 
@@ -32,10 +33,13 @@ def run_experiment():
 
         print(k, mse)
 
+    os.makedirs("../Results", exist_ok=True)
+
+    plt.figure(figsize=(8, 5))
     plt.plot(ks, mses, marker='o')
     plt.xlabel("Neuronas ocultas (K)")
     plt.ylabel("MSE")
-    plt.title("RBFNN: Neuronas vs Error")
+    plt.title("RBFNN: Neuronas ocultas vs MSE")
     plt.grid(True)
 
     plt.savefig("../Results/MSE_vs_Neuronas.png")
